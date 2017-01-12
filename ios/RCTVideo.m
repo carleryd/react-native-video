@@ -380,15 +380,16 @@ static NSString *const playbackRate = @"rate";
         }
     }
   } else if (object == _player) {
-      if([keyPath isEqualToString:playbackRate]) {
-          self.onPlaybackRateChange(@{@"playbackRate": [NSNumber numberWithFloat:_player.rate],
-                                      @"target": self.reactTag});
-          if(_playbackStalled && _player.rate > 0) {
-              self.onPlaybackResume(@{@"playbackRate": [NSNumber numberWithFloat:_player.rate],
-                                      @"target": self.reactTag});
-              _playbackStalled = NO;
-          }
-      }
+      // This causes crash when viewing video, temporarily comment out.
+      // if([keyPath isEqualToString:playbackRate]) {
+      //     self.onPlaybackRateChange(@{@"playbackRate": [NSNumber numberWithFloat:_player.rate],
+      //                                 @"target": self.reactTag});
+      //     if(_playbackStalled && _player.rate > 0) {
+      //         self.onPlaybackResume(@{@"playbackRate": [NSNumber numberWithFloat:_player.rate],
+      //                                 @"target": self.reactTag});
+      //         _playbackStalled = NO;
+      //     }
+      // }
   } else {
       [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
