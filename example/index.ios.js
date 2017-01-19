@@ -19,6 +19,7 @@ class VideoPlayer extends Component {
     super(props);
     this.onLoad = this.onLoad.bind(this);
     this.onProgress = this.onProgress.bind(this);
+    this.onBuffer = this.onBuffer.bind(this);
   }
   state = {
     rate: 1,
@@ -29,15 +30,21 @@ class VideoPlayer extends Component {
     currentTime: 0.0,
     controls: false,
     paused: true,
-    skin: 'custom'
+    skin: 'custom',
+    isBuffering: false,
   };
 
   onLoad(data) {
+    console.log('On load fired!');
     this.setState({duration: data.duration});
   }
 
   onProgress(data) {
     this.setState({currentTime: data.currentTime});
+  }
+
+  onBuffer({ isBuffering }: { isBuffering: boolean }) {
+    this.setState({ isBuffering });
   }
 
   getCurrentTimePercentage() {
@@ -115,6 +122,7 @@ class VideoPlayer extends Component {
             muted={this.state.muted}
             resizeMode={this.state.resizeMode}
             onLoad={this.onLoad}
+            onBuffer={this.onBuffer}
             onProgress={this.onProgress}
             onEnd={() => { AlertIOS.alert('Done!') }}
             repeat={true}
@@ -174,6 +182,7 @@ class VideoPlayer extends Component {
             muted={this.state.muted}
             resizeMode={this.state.resizeMode}
             onLoad={this.onLoad}
+            onBuffer={this.onBuffer}
             onProgress={this.onProgress}
             onEnd={() => { AlertIOS.alert('Done!') }}
             repeat={true}
